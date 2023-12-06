@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+{% block content %}
+{% load socialaccount %}{#googleログインのリンクに必要#}
+
+
+{% if user.is_authenticated %}{#ログインしている#}
+  <h1>対戦相手のキャラクター</h1>
+
+  <div class="row">
+    {% for character in object_list %}
+
+      <a href="{% url 'smash_note:character_detail' character.id %}" class="col-lg-1 col-sm-2">
+        <img src="{{ character.image_url.url }}" alt="{{ character.character_name }}の画像">
+      </a>
+    {% endfor %}
+  </div>
+
+{% else %}
+  <h1><strong>ログインすると対戦結果が登録できます</strong></h1>
+  <a href="{% provider_login_url "google"  %}?next=/" class="btn btn-outline-primary mb-3">Googleでログイン</a>
+
+  <div class="row">{#元々１２列あったのが１つが２列分使うので、６列しか無理#}
+    {% for character in object_list %}
+      <a href="" class="col-lg-1 col-sm-2">
+        <img class="clickable" src="{{ character.image_url.url }}" alt="{{ character.character_name }}の画像">
+      </a>
+    {% endfor %}
+  </div>
+  <script>
+    (function(){//初期化してクリックしたときの処理を記述
+
+      let imgElements = document.querySelectorAll(".clickable");//idがclickableのものを全て取得
+
+      /* img要素にクリックイベントを追加*/
+      imgElements.forEach(function(imgElement) {
+        imgElement.addEventListener('click', function() {
+            alert('ログインすると対戦結果が登録できます');
+        });
+      });
+    })();
+  </script>
+{% endif %}
+
+
+
+
+{%endblock%}

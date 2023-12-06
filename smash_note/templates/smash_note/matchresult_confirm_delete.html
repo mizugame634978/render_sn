@@ -1,0 +1,16 @@
+{% extends './base.html' %}
+{% block content %}
+    <h1>memoの削除</h1>
+    <p>このmemoを削除しますか？</p>
+    <form method="post">
+        {% csrf_token %}
+
+        <button type='submit' class='submit delete'>削除する</button>
+
+    </form>
+    <div>
+        <a href="JavaScript:history.back()">&lt; 戻る</a>
+    </div>
+
+
+{% endblock %}

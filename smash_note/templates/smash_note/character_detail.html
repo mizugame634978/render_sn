@@ -1,0 +1,158 @@
+{% extends './base.html' %}
+{%load static%}
+{%block ex_head%}
+<link rel="stylesheet" href="{% static 'css/radio_button.css'%}">
+{% endblock %}
+{% block content %}
+
+
+<div class="container text-center">
+  <h1>
+    VS &nbsp<span class="ml-10"><img  src="{{ character.image_url.url }}" alt="{{ character.character_name }}の画像"></span>
+  </h1>
+
+  {% if filter_character %}{#キャラでフィルターしている場合画像を表示#}
+    <h1>
+      You &nbsp<span class="ml-10"><img  src="{{ filter_character.image_url.url }}" alt="{{ filter_character.character_name }}の画像"></span>
+    </h1>
+  {% endif %}
+
+
+  <h4>
+    <span class="badge bg-secondary">
+      勝率:  {{ win_rate }}%
+    </span>
+    <small>
+    有効試合数: {{ valid_total_matches }}</small>
+  </h4>
+  <a href="{% url 'smash_note:memo_create' character.pk %}" class="btn btn-success mb-3">
+    対戦を記録&nbsp;<i class="fa-solid fa-pen-to-square"></i>
+  </a>
+
+
+
+<br>
+</div>
+
+<script>
+  /*選択済みのラジオボタンを押した際に、選択を解除する*/
+  let beforeRadioButton = {};//これにラジオボタンのnameと前回のIDがセットで入る
+
+  function doubleSelect(button){
+    let nowRadioId = button.id;//現在のラジオボタンのidを取得
+    let nowRadioName = button.name;//現在のラジオボタンのnameを取得
+
+    if(! beforeRadioButton[nowRadioName]){//jsonに元からないと初期化
+      beforeRadioButton[nowRadioName] = -1;
+    }
+    if(beforeRadioButton[nowRadioName] == nowRadioId){
+      button.checked = false;
+      beforeRadioButton[nowRadioName] = -1;
+    }else{
+      beforeRadioButton[nowRadioName] =nowRadioId;
+    }
+  }
+</script>
+{###ラジオボタンでフィルター###}
+  <div class="form-container">
+    <form method="GET" action="{% url 'smash_note:character_detail' character.id %}">
+
+      <div class="radio-tile-group">
+        {% for favorite_character in favorite_characters %}{#お気に入りキャラ#}
+          <div class="input-container">
+              <input type="radio" name="filter" value="{{ favorite_character.id }}" id="{{favorite_character.id}}"onclick="doubleSelect(this)"/>
+              <div class="radio-tile">
+                <label for="{{favorite_character.id}} ">
+                  <span class="c-img"><img
+                    src="{{ favorite_character.image_url.url }}" alt="{{ favorite_character.character_name }}の画像"
+                  ></span>
+                </label>
+              </div>
+          </div>
+        {% endfor %}
+
+
+
+      </div>{#radio-tile-group#}
+
+      <div class="radio-tile-group">
+
+        <div class="input-container">
+          <input type="radio"name="win_rose" value="True" id='1'onclick="doubleSelect(this)">
+          <div class="radio-tile">
+            <label for="none"> <span class="c-text">  勝ちのみ</span></label>
+          </div>
+        </div>
+        <div class="input-container">
+          <input type="radio"name="win_rose" value="False" id='2'onclick="doubleSelect(this)">
+          <div class="radio-tile">
+            <label for="none"> <span class="c-text">  負けのみ</span></label>
+          </div>
+        </div>
+
+      </div>
+
+
+        <div class="container text-center">
+          <button type="submit" class="btn btn-primary mb-3">
+            フィルター<i class="fa-solid fa-filter"></i>
+          </button>
+        </div>
+
+    </form>
+  </div>
+
+
+{% comment %}すべてのリザルトを表示  {% endcomment %}
+<div style="background-color:#f3f6f9;"class=" justify-content-center align-items-center" >
+  <br>
+  {% if not match_results %}{#対戦記録がない場合そのことを表示#}
+  <div class="col-sm-10 col-lg-3 mx-auto text-center mb-4">
+    <div class="card">
+      <div class="card-body">
+        記録なし
+      </div>
+    </div>
+  </div>
+  <br>
+  {% endif %}
+
+  {% for result in match_results %}
+    <div class="row">
+      <div class="col-sm-10 col-lg-3 mx-auto mb-4">
+        <div class="card">
+          <div class="card-body">
+
+            <h5 class="card-title">
+              {% if result.win_flag == True%}
+                勝ち
+              {% elif result.win_flag == False%}
+                負け
+              {% else %}
+                無記入
+              {% endif %}
+              {{result.player_character_id}}
+            </h5>
+
+            <h6 class="card-subtitle text-body-secondary mb-2">
+              {{result.memo_date}}
+              <a href="{% url "smash_note:memo_update" result.pk %}">編集</a>
+            </h6>
+
+            <p class="card-text">
+              {{ result.memo }}
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+{%endblock%}
+
