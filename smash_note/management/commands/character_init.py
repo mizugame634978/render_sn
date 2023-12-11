@@ -43,7 +43,7 @@ class Command(BaseCommand):
             {"character_name":"ワリオ","image_url":"images/wario.jpg"},
             {"character_name":"スネーク","image_url":"images/snake.jpg"},
             {"character_name":"アイク","image_url":"images/ike.jpg"},
-            {"character_name":"ポケトレ","image_url":"images/pokemon_trainer.jpg"},
+            {"character_name":"ポケトレ","image_url":"images/Pokemon_trainer.jpg"},
             {"character_name":"ディディコング","image_url":"images/dd.jpg"},
             {"character_name":"ルカ","image_url":"images/lucas.jpg"},
             {"character_name":"ソニック","image_url":"images/sonic.jpg"},
