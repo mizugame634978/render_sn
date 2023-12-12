@@ -24,7 +24,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','smash_note.onrender.com','django-render-oyxw.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1','smash_note.onrender.com','django-render-oyxw.onrender.com','https://django-render-2b15.onrender.com','django-render-2b15.onrender.com']
 
 
 
