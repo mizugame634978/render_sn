@@ -9,4 +9,4 @@ echo "make"
 python manage.py migrate
 echo "migrate"
 # python manage.py superuser
-python manage.py character_init
+# python manage.py character_init
