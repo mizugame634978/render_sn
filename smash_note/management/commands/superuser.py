@@ -14,3 +14,4 @@ class Command(BaseCommand):
           password=settings.SUPERUSER_PASSWORD
       )
       print("スーパーユーザー作成")
+    self.stdout.write(self.style.SUCCESS('this command Success'))
