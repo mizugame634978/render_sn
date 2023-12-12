@@ -22,7 +22,7 @@ env.read_env(os.path.join(BASE_DIR,'.env'))
 SECRET_KEY = 'django-insecure-+)hqa4=iz91hdid8@%hn%7##$khgh^-9e515xh(vw38c#y&x@i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','smash_note.onrender.com','django-render-oyxw.onrender.com']
 
@@ -138,9 +138,9 @@ STATIC_ROOT = str(BASE_DIR/"staticfiles")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = ([os.path.join(BASE_DIR/'static'),])
 
-SUPERUSER_NAME=env("SUPERUSER_NAME")
-SUPER_USER_EMAIL = env('SUPER_USER_EMAIL')
-SUPER_USER_PASSWORD=env('SUPER_USER_PASSWORD')
+# SUPERUSER_NAME=env("SUPERUSER_NAME")
+SUPERUSER_EMAIL = env('SUPERUSER_EMAIL')
+SUPERUSER_PASSWORD=env('SUPERUSER_PASSWORD')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build','static')#vercel
 
 # Default primary key field type
